@@ -4,4 +4,4 @@ uri = if Rails.env.development?
         URI.parse ENV['REDIS_URL']
       end
 
-$redis = Redis.new Redis.new(:url => uri)
+$redis = Redis.new(:url => uri)
