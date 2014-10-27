@@ -6,7 +6,7 @@ ruby '2.1.2'
 gem 'rails', '4.1.6'
 gem 'rails-api'
 gem 'active_model_serializers'
-gem 'unicorn'
+gem 'thin', '~> 1.6'
 # Use mysql as the database for Active Record
 gem 'mysql2'
 #Redis for the index serving. See Application / Landing Controller.
@@ -19,7 +19,6 @@ gem 'jbuilder', '~> 2.0'
 gem 'sdoc', '~> 0.4.0',        group: :doc
 
 # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
-gem 'spring',      group: :development
 
 
 group :development, :test do
@@ -34,7 +33,12 @@ end
 # gem 'bcrypt', '~> 3.1.7'
 
 # Use Capistrano for deployment
-gem 'capistrano-rails', group: :development
+group :development do
+  gem 'spring'
+  gem 'capistrano-rails'
+  gem 'capistrano-thin'
+  gem 'capistrano-rbenv', '~> 2.0', require: false
+end
 
 # Use debugger
 # gem 'debugger', group: [:development, :test]
