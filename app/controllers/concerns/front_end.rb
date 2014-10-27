@@ -16,8 +16,9 @@ module FrontEnd
   end
 
   def redis_text index_key
-    Rails.logger.debug "*"*25
-    Rails.logger.debug "Redis Index_Key:" + index_key
+    Rails.logger.info "*"*25
+    Rails.logger.info "Redis Index_Key:"
+    Rails.logger.info index_key
 
     #config/initializers/redis.rb
     $redis.get index_key
