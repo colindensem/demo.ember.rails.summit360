@@ -8,8 +8,6 @@ set :repo_url, 'git@bitbucket.org:summit360/summit360-api.git'
 # ask :branch, proc { `git rev-parse --abbrev-ref HEAD`.chomp }.call
 set :default_env, { path: "~/.rbenv/shims:~/.rbenv/bin:$PATH" }
 
-set :deploy_to, '/home/colind/apps/summit360_api'
-
 set :bundle_flags, '--deployment --quiet'
 
 set :rbenv_ruby, '2.1.2'

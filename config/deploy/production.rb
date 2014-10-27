@@ -18,6 +18,11 @@
 server 'helium', user: 'colind', roles: %w{web app}
 
 
+set :deploy_to, '~/apps/summit360_api'
+set :branch, 'master'
+
+set :rails_env, 'production'
+
 # Custom SSH Options
 # ==================
 # You may pass any option but keep in mind that net/ssh understands a
