@@ -34,6 +34,11 @@ set :rbenv_roles, :all # default value
 # Default value for :linked_files is []
 set :linked_files, %w{.rbenv-vars config/database.yml}
 
+
+set :unicorn_config_path, "config/unicorn.rb"
+
+set :linked_dirs, %w{tmp/pids}
+
 # Default value for linked_dirs is []
 # set :linked_dirs, %w{bin log tmp/pids tmp/cache tmp/sockets vendor/bundle public/system}
 
@@ -48,7 +53,7 @@ namespace :deploy do
   desc 'Restart application'
   task :restart do
     on roles(:app), in: :sequence, wait: 5 do
-      execute "service thin restart"
+      invoke 'unicorn:restart'
     end
   end
 

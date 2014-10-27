@@ -18,8 +18,9 @@ require 'capistrano/deploy'
 require 'capistrano/rails'
 require 'capistrano/rbenv'
 require 'capistrano/bundler'
-require 'capistrano/thin'
+# require 'capistrano/thin'
 
+require 'capistrano3/unicorn'
 
 # require 'capistrano/chruby'
 # require 'capistrano/rails/assets'

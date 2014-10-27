@@ -6,7 +6,7 @@ ruby '2.1.2'
 gem 'rails', '4.1.6'
 gem 'rails-api'
 gem 'active_model_serializers'
-gem 'thin', '~> 1.6'
+gem 'unicorn'
 # Use mysql as the database for Active Record
 gem 'mysql2'
 #Redis for the index serving. See Application / Landing Controller.
@@ -36,7 +36,8 @@ end
 group :development do
   gem 'spring'
   gem 'capistrano-rails'
-  gem 'capistrano-thin'
+  # gem 'capistrano-thin'
+  gem 'capistrano3-unicorn'
   gem 'capistrano-rbenv', '~> 2.0', require: false
 end
 
