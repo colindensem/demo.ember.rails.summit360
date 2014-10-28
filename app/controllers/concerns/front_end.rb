@@ -12,9 +12,9 @@ module FrontEnd
     @namespace = namespace
 
     index_key = if @namespace
-                  "#{@namespace}:#{version_key params[:version]}:index.html"
+                  "#{@namespace}:#{version_key(params[:version])}:index.html"
                 else
-                  "#{version_key params[:version]}:index.html"
+                  "#{version_key(params[:version])}:index.html"
                 end
     redis_text index_key
   end
@@ -33,20 +33,18 @@ module FrontEnd
   #Check params for a given key.
   def version_key version=nil
 
-    check_version = "release" if version.blank?
+    version = "release" if version.blank?
 
     Rails.logger.info "*"*25
     Rails.logger.info "VersionKey:"
-    Rails.logger.info check_version
+    Rails.logger.info version
 
-    case check_version
+    case version
     when 'release' then 'release'
     when 'canary' then $redis.lindex('releases',0)
     else
-      check_version
+      version
     end
-
-
   end
 
   # #Read Redis for key, to obtain display string ( index html )
