@@ -1,11 +1,9 @@
-env = ENV["RAILS_ENV"] || "development"
+rails_env = ENV["RAILS_ENV"] || "production"
 
 
-# Production specific settings
-if env == "production"
-  app_dir = "summit360_api"
-  worker_processes 1
-end
+
+app_dir = "summit360_api"
+worker_processes 1
 
 # listen on both a Unix domain socket and a TCP port,
 # we use a shorter backlog for quicker failover when busy
@@ -23,10 +21,11 @@ working_directory "/home/colind/apps/#{app_dir}/current"
 
 # feel free to point this anywhere accessible on the filesystem
 user 'colind', 'colind'
+
 shared_path = "/home/colind/apps/#{app_dir}/shared"
 
 stderr_path "#{shared_path}/log/unicorn.stderr.log"
-stdout_path "#{shared_path}/log/unicorn.stdout.log"
+stdout_path "#{shared_path}/log/unicorn.stderr.log"
 
 pid "#{shared_path}/tmp/pids/unicorn.pid"
 
@@ -34,13 +33,13 @@ pid "#{shared_path}/tmp/pids/unicorn.pid"
 before_fork do |server, worker|
   # the following is highly recomended for Rails + "preload_app true"
   # as there's no need for the master process to hold a connection
-  if defined?(ActiveRecord::Base)
-    ActiveRecord::Base.connection.disconnect!
-  end
+  #if defined?(ActiveRecord::Base)
+  ActiveRecord::Base.connection.disconnect!
+  # end
 
   # Before forking, kill the master process that belongs to the .oldbin PID.
   # This enables 0 downtime deploys.
-  old_pid = "#{shared_path}/pids/unicorn.pid.oldbin"
+  old_pid = "#{server.config[:pid]}.oldbin"
   if File.exists?(old_pid) && server.pid != old_pid
     begin
       Process.kill("QUIT", File.read(old_pid).to_i)
@@ -52,7 +51,7 @@ end
 
 after_fork do |server, worker|
   # the following is *required* for Rails + "preload_app true",
-  if defined?(ActiveRecord::Base)
+  # if defined?(ActiveRecord::Base)
     ActiveRecord::Base.establish_connection
-  end
+  # end
 end
