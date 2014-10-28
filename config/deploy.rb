@@ -6,9 +6,11 @@ set :bundle_flags, '--deployment --quiet'
 
 set :application, 'summit360_api'
 set :deploy_user, 'deploy'
+set :deploy_to, '~/apps/summit360_api'
 
 set :scm, :git
 set :repo_url, 'git@bitbucket.org:summit360/summit360-api.git'
+set :branch, 'master'
 
 # Default branch is :master
 # ask :branch, proc { `git rev-parse --abbrev-ref HEAD`.chomp }.call
@@ -28,7 +30,8 @@ set :keep_releases, 5
 set :linked_files, %w{.rbenv-vars config/database.yml}
 
 
-set :linked_dirs, %w{bin log tmp/pids tmp/cache}
+set :bundle_binstubs, nil
+set :linked_dirs, %w{log tmp/pids tmp/cache tmp/sockets vendor/bundle public/system}
 
 set(:config_files, %w(
   database.example.yml

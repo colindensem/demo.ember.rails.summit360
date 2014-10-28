@@ -17,10 +17,6 @@
 
 server 'helium.deploy', roles: %w{web app db}
 
-
-set :deploy_to, '~/apps/summit360_api'
-set :branch, 'master'
-
 set :rails_env, 'production'
 
 # Custom SSH Options
