@@ -5,6 +5,10 @@ module FrontEnd
   private
   def index_html(namespace=nil)
     # return development_text unless Rails.env.production?
+    Rails.logger.info "*"*25
+    Rails.logger.info "IndexHtml:"
+    Rails.logger.info params[:version]
+
     @namespace = namespace
 
     index_key = if @namespace
@@ -23,18 +27,17 @@ module FrontEnd
     #config/initializers/redis.rb
     $redis.get index_key
     content = $redis.get(index_key)
-    return content ? content : "Redis Read Error: " + development_text
-  end
-  #In Development you'll likely see this, see README
-  def development_text
-    return if Rails.env.production?
-    "You are viewing the API Development Index"
+
   end
 
   #Check params for a given key.
   def version_key version=nil
 
     check_version = "release" if version.blank?
+
+    Rails.logger.info "*"*25
+    Rails.logger.info "VersionKey:"
+    Rails.logger.info check_version
 
     case check_version
     when 'release' then 'release'
