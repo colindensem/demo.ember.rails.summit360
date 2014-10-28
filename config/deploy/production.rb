@@ -15,7 +15,7 @@
 # server list. The second argument is a, or duck-types, Hash and is
 # used to set extended properties on the server.
 
-server 'helium', user: 'colind', roles: %w{web app}
+server 'helium.deploy', roles: %w{web app db}
 
 
 set :deploy_to, '~/apps/summit360_api'

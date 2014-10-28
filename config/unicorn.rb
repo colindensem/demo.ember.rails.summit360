@@ -3,6 +3,8 @@ rails_env = ENV["RAILS_ENV"] || "production"
 
 
 app_dir = "summit360_api"
+working_user = "deploy"
+working_group = "deploy"
 worker_processes 1
 
 # listen on both a Unix domain socket and a TCP port,
@@ -17,12 +19,12 @@ timeout 30
 
 # Help ensure your application will always spawn in the symlinked
 # "current" directory that Capistrano sets up.
-working_directory "/home/colind/apps/#{app_dir}/current"
+working_directory "/home/#{working_user}/apps/#{app_dir}/current"
 
 # feel free to point this anywhere accessible on the filesystem
-user 'colind', 'colind'
+user working_user, working_group
 
-shared_path = "/home/colind/apps/#{app_dir}/shared"
+shared_path = "/home/#{working_user}/apps/#{app_dir}/shared"
 
 stderr_path "#{shared_path}/log/unicorn.stderr.log"
 stdout_path "#{shared_path}/log/unicorn.stderr.log"

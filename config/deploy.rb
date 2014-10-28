@@ -1,38 +1,40 @@
 # config valid only for Capistrano 3.1
+# https://github.com/sepastian/capistrano-unicorn
 lock '3.2.1'
 
+set :bundle_flags, '--deployment --quiet'
+
 set :application, 'summit360_api'
+set :deploy_user, 'deploy'
+
+set :scm, :git
 set :repo_url, 'git@bitbucket.org:summit360/summit360-api.git'
 
 # Default branch is :master
 # ask :branch, proc { `git rev-parse --abbrev-ref HEAD`.chomp }.call
 
-set :default_env, { path: "~/.rbenv/shims:~/.rbenv/bin:$PATH" }
-
-set :bundle_flags, '--deployment --quiet'
-
-set :rbenv_ruby, '2.1.2'
 set :rbenv_type, :user
-set :rbenv_custom_path, '/home/colind/.rbenv'
-
+set :rbenv_ruby, '2.1.2'
 set :rbenv_prefix, "RBENV_ROOT=#{fetch(:rbenv_path)} RBENV_VERSION=#{fetch(:rbenv_ruby)} #{fetch(:rbenv_path)}/bin/rbenv exec"
 set :rbenv_map_bins, %w{rake gem bundle ruby rails}
+
+set :default_env, { path: "~/.rbenv/shims:~/.rbenv/bin:$PATH" }
+set :rbenv_custom_path, '~/.rbenv'
 set :rbenv_roles, :all # default value
 
-
-
-# Default value for :pty is false
-# set :pty, true
+set :keep_releases, 5
 
 # Default value for :linked_files is []
 set :linked_files, %w{.rbenv-vars config/database.yml}
 
+
+set :linked_dirs, %w{bin log tmp/pids tmp/cache}
+
+set(:config_files, %w(
+  database.example.yml
+  .rbenv-vars))
+
 set :unicorn_config_path, "config/unicorn.rb"
-
-set :linked_dirs, %w{tmp/pids}
-
-# Default value for keep_releases is 5
-set :keep_releases, 5
 
 namespace :deploy do
 
